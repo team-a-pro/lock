@@ -7,6 +7,10 @@ Need to install the locking service UDFs as describe in MySQL docs:
 
 https://dev.mysql.com/doc/refman/5.7/en/locking-service-udf-interface.html
 
+## Install via Composer
+
+`composer require team-a/lock:1.0.0`
+
 ## Examples
 
 - Inject PDO object.
