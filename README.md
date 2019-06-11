@@ -11,16 +11,17 @@ https://dev.mysql.com/doc/refman/5.7/en/locking-service-udf-interface.html
 
 - Inject PDO object.
 
-
+```php
     AbstractDb::setPdo(
         new \PDO($dsn, $user, $password)
     );
+```
     
 - Define and use your own lock class based on TeamA\Lock\AbstractDBExclusive or TeamA\Lock\AbstractDBExtended.
 
 - Exclusive lock example:
 
-
+```php
     class Point extends AbstractDbExclusive
     {
         protected function __construct(
@@ -63,11 +64,12 @@ https://dev.mysql.com/doc/refman/5.7/en/locking-service-udf-interface.html
       
          $pointLock->releaseIfLocked();
          
-      } 
+      }
+``` 
           
 - Read/Write locking example:   
     
-    
+```php  
     class GeoBinding extends AbstractDbExtended
     {
         public function __construct(int $departureProviderId)
@@ -117,5 +119,5 @@ https://dev.mysql.com/doc/refman/5.7/en/locking-service-udf-interface.html
         
         // do smth. else...  
         
-        
+```     
        
