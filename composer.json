@@ -1,0 +1,29 @@
+{
+  "name": "team-a/lock",
+  "description": "Exclusive & Read/Write locking based on MySQL Locking Service.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexey Khokhlov",
+      "email": "owlet@team-a.pro",
+      "homepage": "https://team-a.pro",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "info@team-a.pro"
+  },
+  "keywords": [
+    "lock",
+    "locking"
+  ],
+  "require": {
+    "php": "^7.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "TeamA\\Lock\\": "src/"
+    }
+  }
+}
