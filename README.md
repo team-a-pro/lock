@@ -1,15 +1,20 @@
 # lock
 Exclusive &amp; Read/Write locking based on MySQL Locking Service 
 
-## Requrements
+## Requirements
 
-Need to install the locking service UDFs as describe in MySQL docs: 
+- php >= 7.1
+- PDO extension
+
+Need to install the locking service UDFs as described in MySQL docs: 
 
 https://dev.mysql.com/doc/refman/5.7/en/locking-service-udf-interface.html
 
+
+
 ## Install via Composer
 
-`composer require team-a/lock:1.0.0`
+`composer require team-a/lock:^1.0.0`
 
 ## Examples
 
