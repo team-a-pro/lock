@@ -36,6 +36,11 @@ abstract class AbstractDb
         self::$_pdo = $pdo;
     }
 
+    public static function unsetPdo() : void
+    {
+        self::$_pdo = null;
+    }
+
     final public function getKey() : string
     {
         return $this->_key;
