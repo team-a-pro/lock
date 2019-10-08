@@ -2,6 +2,10 @@
 
 namespace TeamA\Lock;
 
+use Closure;
+use PDO;
+use PDOException;
+
 abstract class AbstractDb
 {
     public const NAMESPACE = '';
@@ -12,9 +16,9 @@ abstract class AbstractDb
     ];
 
     /**
-     * @var \PDO | null
+     * @var null | Closure
      */
-    protected static $_pdo  = null;
+    protected static $_pdoPromise = null;
 
     /**
      * @var string
@@ -31,14 +35,9 @@ abstract class AbstractDb
         $this->_key = md5($key);
     }
 
-    public static function setPdo(\PDO $pdo) : void
+    public static function setPdoPromise(Closure $pdoPromise) : void
     {
-        self::$_pdo = $pdo;
-    }
-
-    public static function unsetPdo() : void
-    {
-        self::$_pdo = null;
+        self::$_pdoPromise = $pdoPromise;
     }
 
     final public function getKey() : string
@@ -46,21 +45,33 @@ abstract class AbstractDb
         return $this->_key;
     }
 
+    protected static function _getPdoPromise() : Closure
+    {
+        return self::$_pdoPromise;
+    }
+
+    protected static function _getPdo() : ? PDO
+    {
+        return self::_getPdoPromise() === null ? null : self::_getPdoPromise();
+    }
+
     protected function _query(string $query, array $params = []) : ? string
     {
-        if (self::$_pdo === null) {
+        $pdo = self::_getPdo();
+
+        if ($pdo === null) {
             throw new \Exception('PDO object must be injected before');
         }
 
-        $statement = self::$_pdo->prepare($query);
+        $statement = $pdo->prepare($query);
 
         foreach ($params as $name => $value) {
             switch (true) {
                 case is_int($value):
-                    $type = \PDO::PARAM_INT;
+                    $type = PDO::PARAM_INT;
                     break;
                 default:
-                    $type = \PDO::PARAM_STR;
+                    $type = PDO::PARAM_STR;
             }
 
             $statement->bindValue($name, $value, $type);
@@ -83,7 +94,7 @@ abstract class AbstractDb
     protected function _convertLockException(\Exception $e, int $timeout, bool $writeMode = true) : void
     {
         while (true) {
-            if ($e === null || $e instanceof \PDOException) {
+            if ($e === null || $e instanceof PDOException) {
                 break;
             }
 
@@ -91,7 +102,7 @@ abstract class AbstractDb
         }
 
         if (
-            $e instanceof \PDOException && (
+            $e instanceof PDOException && (
                 strpos($e->getMessage(), '3133') ||
                 strpos($e->getMessage(), 'Service lock wait timeout exceeded')
             )

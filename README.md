@@ -8,21 +8,24 @@ Exclusive &amp; Read/Write locking based on MySQL Locking Service
 
 Need to install the locking service UDFs as described in MySQL docs: 
 
-https://dev.mysql.com/doc/refman/5.7/en/locking-service-udf-interface.html
-
-
+https://dev.mysql.com/doc/refman/8.0/en/locking-service-udf-interface.html
 
 ## Install via Composer
 
-`composer require team-a/lock:^1.1.0`
+`composer require team-a/lock:^1.2.0`
 
 ## Examples
 
-- Inject PDO object.
+- Inject PDO instance promise. You can create lazy instance of PDO.  
 
-```php
-    AbstractDb::setPdo(
-        new \PDO($dsn, $user, $password)
+```php    
+    $serviceManager = $this->getServiceManager();
+    
+    AbstractDb::setPdoPromise(
+        function() use ($serviceManager) : \PDO 
+        {
+            return $serviceManager->getPDO();
+        }
     );
 ```
     
