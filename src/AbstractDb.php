@@ -52,7 +52,7 @@ abstract class AbstractDb
 
     protected static function _getPdo() : ? PDO
     {
-        return self::_getPdoPromise() === null ? null : self::_getPdoPromise();
+        return self::_getPdoPromise() === null ? null : self::_getPdoPromise()();
     }
 
     protected function _query(string $query, array $params = []) : ? string
