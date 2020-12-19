@@ -27,7 +27,7 @@ abstract class AbstractDbExtended extends AbstractDb implements Interfaces\DbExt
      */
     public function lockRead(int $timeout = null) : void
     {
-        $this->_getLock($timeout ?? self::DEFAULT_READ_TIMEOUT, false);
+        $this->_getLock($timeout ?? static::DEFAULT_READ_TIMEOUT, false);
     }
 
     /**
@@ -44,7 +44,7 @@ abstract class AbstractDbExtended extends AbstractDb implements Interfaces\DbExt
      */
     public function lockWrite(int $timeout = null) : void
     {
-        $this->_getLock($timeout?? self::DEFAULT_WRITE_TIMEOUT, true);
+        $this->_getLock($timeout?? static::DEFAULT_WRITE_TIMEOUT, true);
     }
 
     /**
