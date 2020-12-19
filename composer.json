@@ -1,7 +1,7 @@
 {
   "name": "team-a/lock",
   "description": "Exclusive & Read/Write locking based on MySQL Locking Service.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "license": "MIT",
   "authors": [
     {
